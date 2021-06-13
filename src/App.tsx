@@ -1,20 +1,22 @@
 import { useMachine } from "@xstate/react";
 import React from "react";
-import { createMachine } from "xstate";
-import toggle from "./machines/toggle";
+import { Machine } from "xstate";
+import counter from "./machines/counter";
 
-const toggleMachine = createMachine(toggle);
+const counterMachine = Machine(counter);
 
-const Toggler = () => {
-  const [state, send] = useMachine(toggleMachine);
-
+const App: React.FC = () => {
+  const [state, send] = useMachine(counterMachine);
   return (
-    <button onClick={() => send("TOGGLE")}>
-      {state.value === "inactive"
-        ? "Click to activate"
-        : "Active! Click to deactivate"}
-    </button>
+    <>
+      {counterMachine.states[state.value as any].events.map((event) => (
+        <button key={event} onClick={() => send(event)}>
+          {event}
+        </button>
+      ))}
+      <pre>{JSON.stringify(state.context)}</pre>
+    </>
   );
 };
 
-export default Toggler;
+export default App;
