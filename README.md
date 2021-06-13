@@ -62,6 +62,21 @@ Goo will enable developers to 'wire up' a lot of the accounts initially so that 
 - if the user is logged in with their wallet and they're the receiver, only show `cashCheck` method. If they're the creator only show the `cancelCheck` method
 - display the token and the balance of the check when logged in as either party
 
+## Other examples
+
+### Escrow
+
+Initial deposit creates the escrow account. The matching deposit completes the process and the opposite funds are sent to the respective parties, closing the escrow account.
+
+![Screenshot 2021-06-13 at 5 15 36 PM](https://user-images.githubusercontent.com/601961/121814896-55eb8f00-cc6b-11eb-894a-d3358d011257.png)
+
+### Simple counter
+
+You can only increment the counter after it's been created.
+
+![counter](https://user-images.githubusercontent.com/601961/121814889-52f09e80-cc6b-11eb-9e6e-4ac2e1ae0b70.gif)
+
+
 ## Extra resources
 
 - https://statecharts.dev/how-to-use-statecharts.html
