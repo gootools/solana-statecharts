@@ -2,7 +2,7 @@
 
 This project is an exploration into finite state machines for solana smart contracts that will eventually get merged into https://github.com/goosoftware/goo
 
-The idea behind it is to make it possible to load a smart contract (program) by its public address and only see the methods (instructions) that can be done in its current state.
+The idea behind it is to make it possible to load a smart contract (program) by its public address and only see the methods (instructions) that can be invoked based upon its current state.
 
 ## Cashiers check example
 
