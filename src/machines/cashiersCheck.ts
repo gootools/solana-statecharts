@@ -1,22 +1,19 @@
 const cashiersCheck = {
   id: "cashiers-check",
-  initial: "uninitialized",
+  initial: "uncreated",
   states: {
-    uninitialized: {
+    uncreated: {
       on: {
-        CREATE: "created",
+        createCheck: "created",
       },
     },
     created: {
       on: {
-        CASH: "cashed",
-        CANCEL: "cancelled",
+        cashCheck: "burned",
+        cancelCheck: "burned",
       },
     },
-    cancelled: {
-      type: "final",
-    },
-    cashed: {
+    burned: {
       type: "final",
     },
   },
