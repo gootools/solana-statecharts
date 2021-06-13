@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+# Solana Statecharts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is an exploration into finite state machines for solana smart contracts that will eventually get merged into https://github.com/goosoftware/goo
 
-## Available Scripts
+The idea behind it is to make it possible to load a smart contract (program) by its public address and only see the methods (instructions) that can be done in its current state.
 
-In the project directory, you can run:
+## Cashiers check example
 
-### `yarn start`
+Take the [cashiers check example](https://github.com/project-serum/anchor/tree/master/examples/cashiers-check) from anchor.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Initially the cashiers check doesn't exist.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. The user calls createCheck with an amount, receiver and optional memo. Now there's a check that the owner can cancel (burn), or the receiver can cash (burn).
 
-### `yarn test`
+1. Once the check is burned there are no more instructions that can happen.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+We can create a state machine to represent all of these steps
 
-### `yarn build`
+```typescript
+{
+  id: "cashiers-check",
+  initial: "uncreated",
+  states: {
+    uncreated: {
+      on: {
+        createCheck: "created",
+      },
+    },
+    created: {
+      on: {
+        cashCheck: "burned",
+        cancelCheck: "burned",
+      },
+    },
+    burned: {
+      type: "final",
+    },
+  },
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Visually that would look something like this
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![state animation](https://user-images.githubusercontent.com/601961/121813987-9ac0f700-cc66-11eb-9833-9b8237fd2377.gif)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Automatically generate UI
 
-### `yarn eject`
+Using this state machine we can automatically generate the appropriate UI that shows the contents of the program's account(s) and any methods/instructions to the user based on the current state of the program.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![ui](https://user-images.githubusercontent.com/601961/121814067-0905b980-cc67-11eb-980e-69417310d557.gif)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This is still extremely crude but you hopefully you get the idea.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Developers could start with a dynamic UI generated at runtime by their idl/fsm, and then 'eject' if they wanted to serialize everything to react components and customise their application.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Goo
 
-## Learn More
+Goo will enable developers to 'wire up' a lot of the accounts initially so that the UI can be much more focussed and only show inputs for things that the user will want to edit e.g. connect Phantom wallet to sender. Only show editable fields for Receiver, Amount and Memo
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Extra resources
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- https://statecharts.dev/how-to-use-statecharts.html
+- https://xstate.js.org/docs/
+- https://hoverbear.org/blog/rust-state-machine-pattern/
