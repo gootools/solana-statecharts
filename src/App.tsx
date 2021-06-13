@@ -1,23 +1,30 @@
+import { useMachine } from "@xstate/react";
 import React from "react";
+import { createMachine } from "xstate";
 
-function App() {
+const toggleMachine = createMachine({
+  id: "toggle",
+  initial: "inactive",
+  states: {
+    inactive: {
+      on: { TOGGLE: "active" },
+    },
+    active: {
+      on: { TOGGLE: "inactive" },
+    },
+  },
+});
+
+const Toggler = () => {
+  const [state, send] = useMachine(toggleMachine);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <button onClick={() => send("TOGGLE")}>
+      {state.value === "inactive"
+        ? "Click to activate"
+        : "Active! Click to deactivate"}
+    </button>
   );
-}
+};
 
-export default App;
+export default Toggler;
