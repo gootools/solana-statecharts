@@ -55,11 +55,12 @@ Developers could start with a dynamic UI generated at runtime by their idl/fsm, 
 
 ### Goo
 
-Goo will enable developers to 'wire up' a lot of the accounts initially so that the UI can be much more focussed and only show inputs for things that the user will want to edit for example
+Goo will enable developers to 'wire up' a lot of the accounts initially so that the UI can be much more streamlined and focus only on inputs for things that the user will want to edit, for example
 
-- when user logs in with Phantom/Sollet automatically make that account the sender
-- when creating the check only show editable fields for 'important' things like Receiver address, Token, Amount and Memo
-- if the user is logged in with their wallet and they're the receiver, only show cashCheck method. If they're the creator only show the cancelCheck method.
+- when a user is creating a check and is logged in with Phantom/Sollet, automatically make that account the sender
+- when creating the check only show editable fields for 'important' things like `Receiver address`, `Token`, `Amount` and `Memo`
+- if the user is logged in with their wallet and they're the receiver, only show `cashCheck` method. If they're the creator only show the `cancelCheck` method
+- display the token and the balance of the check when logged in as either party
 
 ## Extra resources
 
