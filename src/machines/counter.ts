@@ -28,6 +28,6 @@ const counter = {
       },
     },
   },
-} as any;
+};
 
 export default counter;

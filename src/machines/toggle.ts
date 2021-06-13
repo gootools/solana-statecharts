@@ -1,4 +1,4 @@
-const machine = {
+const toggle = {
   id: "toggle",
   initial: "inactive",
   states: {
@@ -11,4 +11,4 @@ const machine = {
   },
 };
 
-export default machine;
+export default toggle;
