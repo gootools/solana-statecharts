@@ -39,7 +39,7 @@ We can create a state machine to represent all of these steps
 }
 ```
 
-Visually that would look something like this
+Visually that would look something like this, _note how it's not possible to click on actions at certain times. You can't invoke createCheck after a check has been created for instance._
 
 ![state animation](https://user-images.githubusercontent.com/601961/121813987-9ac0f700-cc66-11eb-9833-9b8237fd2377.gif)
 
