@@ -8,6 +8,16 @@ test("all", () => {
       type: "object",
       // required: ["amount"],
       properties: {
+        // accounts
+        check: { type: "string" },
+        vault: { type: "string" },
+        checkSigner: { type: "string" },
+        from: { type: "string" },
+        to: { type: "string" },
+        owner: { type: "string" },
+        tokenProgram: { type: "string" },
+        rent: { type: "string" },
+        // args
         amount: { type: "number" },
         memo: { type: "string" },
         nonce: { type: "number" },
@@ -16,12 +26,28 @@ test("all", () => {
     {
       title: "cashCheck",
       type: "object",
-      properties: {},
+      properties: {
+        // accounts
+        check: { type: "string" },
+        checkSigner: { type: "string" },
+        owner: { type: "string" },
+        to: { type: "string" },
+        tokenProgram: { type: "string" },
+        vault: { type: "string" },
+      },
     },
     {
       title: "cancelCheck",
       type: "object",
-      properties: {},
+      properties: {
+        // accounts
+        check: { type: "string" },
+        checkSigner: { type: "string" },
+        from: { type: "string" },
+        owner: { type: "string" },
+        tokenProgram: { type: "string" },
+        vault: { type: "string" },
+      },
     },
   ];
 

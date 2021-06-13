@@ -1,24 +1,4 @@
-import type { Idl } from "@project-serum/anchor";
-
-// TODO: import these types from @project-serum/anchor
-type IdlType =
-  | "bool"
-  | "u8"
-  | "i8"
-  | "u16"
-  | "i16"
-  | "u32"
-  | "i32"
-  | "u64"
-  | "i64"
-  | "u128"
-  | "i128"
-  | "bytes"
-  | "string"
-  | "publicKey";
-// | IdlTypeVec
-// | IdlTypeOption
-// | IdlTypeDefined;
+import type { Idl, IdlField, IdlType } from "@project-serum/anchor/dist/idl";
 
 const parseArg = (type: IdlType) => {
   switch (type) {
@@ -50,16 +30,24 @@ const parseArg = (type: IdlType) => {
   throw new Error(`I don't know what to do with ${type}`);
 };
 
+const parseArgs = (args: IdlField[]) =>
+  args.reduce((acc, { name, type }) => {
+    acc[name] = parseArg(type as any);
+    return acc;
+  }, {} as Record<string, any>);
+
 const convertIdlToJsonSchema = (idl: Idl) =>
   idl.instructions.map((instruction) => {
-    const { name, args } = instruction;
+    const { name, args, accounts } = instruction;
     return {
       title: name,
       type: "object",
-      properties: args.reduce((acc, { name, type }) => {
-        acc[name] = parseArg(type as any);
-        return acc;
-      }, {} as Record<string, any>),
+      properties: {
+        ...parseArgs(
+          accounts.map((acc) => ({ name: acc.name, type: "string" }))
+        ),
+        ...parseArgs(args),
+      },
     };
   });
 
