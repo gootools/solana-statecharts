@@ -1,19 +1,9 @@
 import { useMachine } from "@xstate/react";
 import React from "react";
 import { createMachine } from "xstate";
+import toggle from "./machines/toggle";
 
-const toggleMachine = createMachine({
-  id: "toggle",
-  initial: "inactive",
-  states: {
-    inactive: {
-      on: { TOGGLE: "active" },
-    },
-    active: {
-      on: { TOGGLE: "inactive" },
-    },
-  },
-});
+const toggleMachine = createMachine(toggle);
 
 const Toggler = () => {
   const [state, send] = useMachine(toggleMachine);
