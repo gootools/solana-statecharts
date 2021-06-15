@@ -2,12 +2,12 @@ import { assign } from "xstate";
 
 const counter = {
   id: "counter",
-  initial: "uninitialized",
+  initial: "uncreated",
   context: {
     count: undefined, // xstate does not like this
   },
   states: {
-    uninitialized: {
+    uncreated: {
       on: {
         CREATE: {
           target: "created",

@@ -1,6 +1,6 @@
 const escrow = {
   id: "escrow",
-  initial: "uninitialized",
+  initial: "uncreated",
   states: {
     uncreated: {
       on: {
