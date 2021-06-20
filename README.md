@@ -8,13 +8,15 @@ The idea behind it is to make it possible to load a smart contract (program) by 
 
 Take the [cashiers check example](https://github.com/project-serum/anchor/tree/master/examples/cashiers-check) from anchor.
 
-1. Initially the cashiers check doesn't exist.
+1. Initially the cashiers check doesn't exist, so a user needs to `create` it.
 
-1. The user calls createCheck with an amount, receiver and optional memo. Now there's a check that the owner can cancel (burn), or the receiver can cash (burn).
+1. The user calls `createCheck` with a specified `amount`, `receiver` and optional `memo`. This user can now be considered both the creator and the sender.
 
-1. Once the check is burned there are no more instructions that can happen.
+1. Now the check exists, either the creator can `cancel` (burn) it, or the receiver can `cash` (burn) it.
 
-We can create a state machine to represent all of these steps
+1. Once either action occurs, the check has been `burned` and there are no more instructions can be run.
+
+We can create a simple state machine to represent all of this logic.
 
 ```typescript
 {
